@@ -65,7 +65,7 @@ def handle_message(event):
             "1️⃣ 『5000円 @名前に返済』で返済記録\n"
             "2️⃣ 『@名前に30000円借りた』で借金登録\n"
             "3️⃣ 『あといくら？』で残額を確認\n"
-            "4️⃣ 雑談や相談もOK（ChatGPTが返答）\n\n"
+            "4️⃣ 雑談は未対応です（ChatGPT無効）\n\n"
             "例：\n・2000円 @ゆいとに返済\n・@伊東　祐輔に40000円借りた\n・あといくら？\n"
         )
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
@@ -112,20 +112,8 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
         return
 
-    # ChatGPT 応答（OpenAI v1.0以降対応）
-    try:
-        response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "あなたは借金管理Botです。返済・借入・残額確認・使い方説明など丁寧に対応します。"},
-                {"role": "user", "content": msg}
-            ]
-        )
-        reply = response.choices[0].message.content.strip()
-    except Exception as e:
-        reply = f"⚠ ChatGPT応答エラー: {str(e)}"
-
-    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
+    # 👇 それ以外（雑談や対応外）には何もしない（返信なし）
+    return
 
 if __name__ == "__main__":
     app.run()
