@@ -78,5 +78,4 @@ def handle_message(event):
         TextSendMessage(text=reply)
     )
 
-if __name__ == "__main__":
-    app.run()
+
