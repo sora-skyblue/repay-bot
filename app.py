@@ -55,6 +55,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    print(f"グループID: {event.source.group_id}") 
     msg = event.message.text
     data = load_data()
 
