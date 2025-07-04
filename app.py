@@ -20,11 +20,11 @@ DATA_FILE = 'data.json'
 
 # 初期登録
 LENDERS = {
-    "@伊東　祐輔": 40000,
+    "@井東　祐輔": 60000,
     "@sora.s": 93350
 }
 
-# データ読み書き
+# データ井井
 
 def load_data():
     try:
