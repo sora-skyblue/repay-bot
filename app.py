@@ -112,14 +112,16 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
         return
 
-    # ChatGPT 応答
+    # ChatGPT 応答（OpenAI v1.0以降対応）
     try:
-        messages = [
-            {"role": "system", "content": "あなたは借金管理Botです。返済・借入・残額確認・使い方の説明もできます。丁寧に返答してください。"},
-            {"role": "user", "content": msg}
-        ]
-        res = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
-        reply = res.choices[0].message.content.strip()
+        response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "あなたは借金管理Botです。返済・借入・残額確認・使い方説明など丁寧に対応します。"},
+                {"role": "user", "content": msg}
+            ]
+        )
+        reply = response.choices[0].message.content.strip()
     except Exception as e:
         reply = f"⚠ ChatGPT応答エラー: {str(e)}"
 
